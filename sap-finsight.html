@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAP-FinSight</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;background:#f5f6f7;color:#32363a}
+    .header{background:linear-gradient(135deg,#0a6ed1,#0854a0);color:white;padding:0 24px;display:flex;align-items:center;height:50px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+    .header .logo{font-size:20px;font-weight:700;margin-right:20px}
+    .nav{background:white;border-bottom:1px solid #d9d9d9;display:flex;padding:0 24px}
+    .nav button{background:none;border:none;cursor:pointer;padding:12px 16px;font-size:14px;color:#0a6ed1;border-bottom:2px solid transparent}
+    .nav button.active{border-bottom-color:#0a6ed1;font-weight:600}
+    .main{max-width:1100px;margin:24px auto;padding:0 16px}
+    .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+    .tile{background:white;border-radius:8px;padding:20px 24px;box-shadow:0 1px 4px rgba(0,0,0,.1);border-left:4px solid #0a6ed1}
+    .tile .val{font-size:28px;font-weight:700;color:#0a6ed1}
+    .tile .lbl{font-size:12px;color:#6a6d70;margin-top:4px}
+    .card{background:white;border-radius:8px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:20px}
+    .card-title{font-size:15px;font-weight:600;margin-bottom:16px;color:#1a1a2e}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{background:#f5f6f7;padding:10px 12px;text-align:left;color:#6a6d70;border-bottom:2px solid #e5e5e5;font-weight:600}
+    tbody tr{border-bottom:1px solid #f0f0f0}
+    tbody tr:hover{background:#fafbfc}
+    tbody td{padding:10px 12px}
+    .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600}
+    .badge-green{background:#d5f0e5;color:#0ead69}
+    .badge-red{background:#ffe0d8;color:#e9340a}
+    .badge-yellow{background:#fff3cd;color:#b8860b}
+    .badge-blue{background:#d0e8ff;color:#0a6ed1}
+    .btn{padding:9px 20px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+    .btn-primary{background:#0a6ed1;color:white}
+    .tab-content{display:none}.tab-content.active{display:block}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .metric-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+    .metric-row:last-child{border:none}
+    .bar-wrap{flex:1;margin:0 12px;height:10px;background:#e5e5e5;border-radius:5px;overflow:hidden}
+    .bar-fill{height:100%;border-radius:5px}
+    .ai-box{background:#f0f7ff;border:1px solid #b3d4f5;border-radius:6px;padding:14px;font-size:13px;line-height:1.9;margin-top:12px}
+    .ai-label{font-weight:700;color:#0a6ed1;margin-bottom:6px}
+    .toast{position:fixed;top:70px;right:20px;background:#0ead69;color:white;padding:12px 20px;border-radius:6px;font-size:13px;display:none;z-index:999}
+    .up{color:#0ead69;font-weight:700} .down{color:#e9340a;font-weight:700}
+  </style>
+</head>
+<body>
+<div class="header"><div class="logo">SAP</div><div style="font-size:15px;opacity:.9">💰 SAP-FinSight — Financial Analytics Dashboard</div></div>
+<div class="nav">
+  <button class="active" onclick="switchTab('dashboard',this)">Dashboard</button>
+  <button onclick="switchTab('pl',this)">P&L Report</button>
+  <button onclick="switchTab('budget',this)">Budget Variance</button>
+  <button onclick="switchTab('anomaly',this)">AI Anomaly</button>
+  <button onclick="switchTab('reports',this)">Reports</button>
+</div>
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="tiles">
+      <div class="tile"><div class="val">₹12.4Cr</div><div class="lbl">Total Revenue (Q1 2026)</div></div>
+      <div class="tile" style="border-color:#0ead69"><div class="val" style="color:#0ead69">₹3.2Cr</div><div class="lbl">Net Profit</div></div>
+      <div class="tile" style="border-color:#e9340a"><div class="val" style="color:#e9340a">₹8.9Cr</div><div class="lbl">Total Expenses</div></div>
+      <div class="tile" style="border-color:#f5a623"><div class="val" style="color:#f5a623">25.8%</div><div class="lbl">Profit Margin</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">📊 Revenue by Division</div>
+        <div class="metric-row"><span>Products</span><div class="bar-wrap"><div class="bar-fill" style="width:75%;background:#0a6ed1"></div></div><span class="up">₹9.3Cr</span></div>
+        <div class="metric-row"><span>Services</span><div class="bar-wrap"><div class="bar-fill" style="width:24%;background:#0ead69"></div></div><span class="up">₹2.4Cr</span></div>
+        <div class="metric-row"><span>Licensing</span><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#f5a623"></div></div><span class="up">₹0.7Cr</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 Key Financial Ratios</div>
+        <div class="metric-row"><span>Current Ratio</span><span class="up">2.4</span></div>
+        <div class="metric-row"><span>Debt-to-Equity</span><span class="up">0.38</span></div>
+        <div class="metric-row"><span>Return on Equity</span><span class="up">18.4%</span></div>
+        <div class="metric-row"><span>EBITDA Margin</span><span class="up">31.2%</span></div>
+        <div class="metric-row"><span>Working Capital</span><span class="up">₹4.1Cr</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🤖 AI Financial Anomalies Detected</div>
+      <table>
+        <thead><tr><th>Transaction ID</th><th>Department</th><th>Amount</th><th>Issue</th><th>Risk</th></tr></thead>
+        <tbody>
+          <tr><td>#TXN-8821</td><td>Marketing</td><td>₹12,40,000</td><td>300% above monthly avg</td><td><span class="badge badge-red">High</span></td></tr>
+          <tr><td>#TXN-8814</td><td>HR</td><td>₹3,20,000</td><td>Duplicate payment detected</td><td><span class="badge badge-red">High</span></td></tr>
+          <tr><td>#TXN-8801</td><td>Operations</td><td>₹1,80,000</td><td>Unbudgeted expense</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- P&L -->
+  <div id="tab-pl" class="tab-content">
+    <div class="card">
+      <div class="card-title">📋 Profit & Loss Statement — Q1 2026</div>
+      <table>
+        <thead><tr><th>Item</th><th>Jan 2026</th><th>Feb 2026</th><th>Mar 2026</th><th>Total Q1</th><th>YoY</th></tr></thead>
+        <tbody>
+          <tr style="font-weight:600;background:#f0f7ff"><td>Revenue</td><td>₹3.8Cr</td><td>₹4.1Cr</td><td>₹4.5Cr</td><td>₹12.4Cr</td><td><span class="up">+14%</span></td></tr>
+          <tr><td>Cost of Goods Sold</td><td>₹1.9Cr</td><td>₹2.0Cr</td><td>₹2.2Cr</td><td>₹6.1Cr</td><td><span class="down">+10%</span></td></tr>
+          <tr style="font-weight:600"><td>Gross Profit</td><td>₹1.9Cr</td><td>₹2.1Cr</td><td>₹2.3Cr</td><td>₹6.3Cr</td><td><span class="up">+18%</span></td></tr>
+          <tr><td>Operating Expenses</td><td>₹0.8Cr</td><td>₹0.9Cr</td><td>₹1.1Cr</td><td>₹2.8Cr</td><td><span class="down">+12%</span></td></tr>
+          <tr><td>EBITDA</td><td>₹1.1Cr</td><td>₹1.2Cr</td><td>₹1.2Cr</td><td>₹3.5Cr</td><td><span class="up">+22%</span></td></tr>
+          <tr><td>Tax (25%)</td><td>₹0.1Cr</td><td>₹0.1Cr</td><td>₹0.1Cr</td><td>₹0.3Cr</td><td>—</td></tr>
+          <tr style="font-weight:700;background:#d5f0e5"><td>Net Profit</td><td>₹1.0Cr</td><td>₹1.1Cr</td><td>₹1.1Cr</td><td>₹3.2Cr</td><td><span class="up">+24%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BUDGET VARIANCE -->
+  <div id="tab-budget" class="tab-content">
+    <div class="card">
+      <div class="card-title">📊 Budget vs Actual — Q1 2026</div>
+      <table>
+        <thead><tr><th>Department</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Sales</td><td>₹2,00,000</td><td>₹1,84,000</td><td><span class="up">+₹16,000 under</span></td><td><span class="badge badge-green">✅ On Track</span></td></tr>
+          <tr><td>Marketing</td><td>₹80,000</td><td>₹1,24,000</td><td><span class="down">-₹44,000 over</span></td><td><span class="badge badge-red">⚠ Over Budget</span></td></tr>
+          <tr><td>HR & Admin</td><td>₹1,20,000</td><td>₹1,18,000</td><td><span class="up">+₹2,000 under</span></td><td><span class="badge badge-green">✅ On Track</span></td></tr>
+          <tr><td>Operations</td><td>₹3,00,000</td><td>₹3,18,000</td><td><span class="down">-₹18,000 over</span></td><td><span class="badge badge-yellow">⚠ Monitor</span></td></tr>
+          <tr><td>IT & Infra</td><td>₹2,50,000</td><td>₹2,20,000</td><td><span class="up">+₹30,000 under</span></td><td><span class="badge badge-green">✅ On Track</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ANOMALY -->
+  <div id="tab-anomaly" class="tab-content">
+    <div class="card">
+      <div class="card-title">🤖 AI Anomaly Detection — Powered by OpenAI API</div>
+      <div class="ai-box">
+        <div class="ai-label">🚨 Detected Financial Anomalies</div>
+        <div>🔴 <strong>TXN-8821 (Marketing — ₹12.4L):</strong> This is 300% above the 3-month average. Likely unauthorized spend. Freeze & investigate immediately.</div>
+        <div>🔴 <strong>TXN-8814 (HR — ₹3.2L):</strong> Exact duplicate of TXN-8802 paid 3 days ago. Reverse the payment immediately.</div>
+        <div>🟡 <strong>TXN-8801 (Operations — ₹1.8L):</strong> No corresponding PO found. Categorize or return funds.</div>
+        <div>✅ <strong>Overall:</strong> 98.4% of transactions are clean. 3 flagged for review.</div>
+      </div>
+      <table style="margin-top:16px">
+        <thead><tr><th>TXN ID</th><th>Dept</th><th>Amount</th><th>Anomaly Type</th><th>Risk</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>#TXN-8821</td><td>Marketing</td><td>₹12,40,000</td><td>Unusual spike</td><td><span class="badge badge-red">High</span></td><td><button class="btn btn-primary" style="padding:4px 12px;font-size:12px" onclick="toast('TXN-8821 flagged & frozen')">Freeze</button></td></tr>
+          <tr><td>#TXN-8814</td><td>HR</td><td>₹3,20,000</td><td>Duplicate payment</td><td><span class="badge badge-red">High</span></td><td><button class="btn btn-primary" style="padding:4px 12px;font-size:12px;background:#e9340a" onclick="toast('TXN-8814 reversal initiated')">Reverse</button></td></tr>
+          <tr><td>#TXN-8801</td><td>Operations</td><td>₹1,80,000</td><td>No PO linked</td><td><span class="badge badge-yellow">Medium</span></td><td><button class="btn btn-primary" style="padding:4px 12px;font-size:12px;background:#f5a623" onclick="toast('TXN-8801 sent for review')">Review</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- REPORTS -->
+  <div id="tab-reports" class="tab-content">
+    <div class="card">
+      <div class="card-title">📤 Export Reports</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="toast('P&L Report exported (SAP format)')">📄 Export P&L</button>
+        <button class="btn btn-primary" onclick="toast('Budget Variance Report exported')">📊 Export Budget Variance</button>
+        <button class="btn btn-primary" onclick="toast('Anomaly Report exported')">🚨 Export Anomaly Report</button>
+        <button class="btn btn-primary" onclick="toast('Full Financial Report exported')">📁 Full Report</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+function switchTab(tab,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  el.classList.add('active');
+}
+function toast(msg){
+  const t=document.getElementById('toastEl');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAP-ProcureAI</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;background:#f5f6f7;color:#32363a}
+    .header{background:linear-gradient(135deg,#0a6ed1,#0854a0);color:white;padding:0 24px;display:flex;align-items:center;height:50px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+    .header .logo{font-size:20px;font-weight:700;margin-right:20px}
+    .nav{background:white;border-bottom:1px solid #d9d9d9;display:flex;padding:0 24px}
+    .nav button{background:none;border:none;cursor:pointer;padding:12px 16px;font-size:14px;color:#0a6ed1;border-bottom:2px solid transparent}
+    .nav button.active{border-bottom-color:#0a6ed1;font-weight:600}
+    .main{max-width:1100px;margin:24px auto;padding:0 16px}
+    .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+    .tile{background:white;border-radius:8px;padding:20px 24px;box-shadow:0 1px 4px rgba(0,0,0,.1);border-left:4px solid #0a6ed1}
+    .tile .val{font-size:30px;font-weight:700;color:#0a6ed1}
+    .tile .lbl{font-size:12px;color:#6a6d70;margin-top:4px}
+    .card{background:white;border-radius:8px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:20px}
+    .card-title{font-size:15px;font-weight:600;margin-bottom:16px;color:#1a1a2e}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{background:#f5f6f7;padding:10px 12px;text-align:left;color:#6a6d70;border-bottom:2px solid #e5e5e5;font-weight:600}
+    tbody tr{border-bottom:1px solid #f0f0f0}
+    tbody tr:hover{background:#fafbfc}
+    tbody td{padding:10px 12px}
+    .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600}
+    .badge-green{background:#d5f0e5;color:#0ead69}
+    .badge-blue{background:#d0e8ff;color:#0a6ed1}
+    .badge-red{background:#ffe0d8;color:#e9340a}
+    .badge-yellow{background:#fff3cd;color:#b8860b}
+    .badge-gray{background:#e8e8e8;color:#555}
+    .btn{padding:9px 20px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+    .btn-primary{background:#0a6ed1;color:white}
+    .btn-sm{padding:5px 12px;font-size:12px}
+    .form-row{margin-bottom:14px}
+    .form-row label{display:block;font-size:12px;color:#6a6d70;margin-bottom:4px;font-weight:600}
+    .form-row input,.form-row select,.form-row textarea{width:100%;padding:8px 10px;border:1px solid #d1d1d6;border-radius:4px;font-size:13px}
+    .form-row textarea{resize:vertical;height:80px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .tab-content{display:none}.tab-content.active{display:block}
+    .ai-box{background:#f0f7ff;border:1px solid #b3d4f5;border-radius:6px;padding:14px;margin-top:12px;font-size:13px;line-height:1.8}
+    .ai-label{font-weight:700;color:#0a6ed1;margin-bottom:6px}
+    .toast{position:fixed;top:70px;right:20px;background:#0ead69;color:white;padding:12px 20px;border-radius:6px;font-size:13px;display:none;z-index:999}
+    .star{color:#f5a623;font-size:16px}
+    .metric-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+    .metric-row:last-child{border:none}
+  </style>
+</head>
+<body>
+<div class="header"><div class="logo">SAP</div><div style="font-size:15px;opacity:.9">🛒 SAP-ProcureAI — Intelligent Procurement System</div></div>
+<div class="nav">
+  <button class="active" onclick="switchTab('dashboard',this)">Dashboard</button>
+  <button onclick="switchTab('requests',this)">Purchase Requests</button>
+  <button onclick="switchTab('vendors',this)">Vendor Scoring</button>
+  <button onclick="switchTab('contracts',this)">Contracts</button>
+  <button onclick="switchTab('ai',this)">AI Analysis</button>
+</div>
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="tiles">
+      <div class="tile"><div class="val">142</div><div class="lbl">Open Purchase Requests</div></div>
+      <div class="tile" style="border-color:#0ead69"><div class="val" style="color:#0ead69">₹2.4Cr</div><div class="lbl">Total Spend (Month)</div></div>
+      <div class="tile" style="border-color:#f5a623"><div class="val" style="color:#f5a623">60%</div><div class="lbl">Processing Time Saved</div></div>
+      <div class="tile" style="border-color:#e9340a"><div class="val" style="color:#e9340a">8</div><div class="lbl">High Risk Contracts</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">📊 Spend by Category</div>
+        <div class="metric-row"><span>💻 IT Equipment</span><span style="color:#0a6ed1;font-weight:700">₹98L</span></div>
+        <div class="metric-row"><span>🪑 Office Furniture</span><span style="color:#0a6ed1;font-weight:700">₹45L</span></div>
+        <div class="metric-row"><span>📦 Raw Materials</span><span style="color:#0a6ed1;font-weight:700">₹72L</span></div>
+        <div class="metric-row"><span>🔧 Maintenance</span><span style="color:#0a6ed1;font-weight:700">₹28L</span></div>
+        <div class="metric-row"><span>🚚 Logistics</span><span style="color:#0a6ed1;font-weight:700">₹17L</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🤖 AI Auto-Classification Results</div>
+        <div class="metric-row"><span>✅ Auto-Approved</span><span style="color:#0ead69;font-weight:700">89 requests</span></div>
+        <div class="metric-row"><span>🔄 Pending Review</span><span style="color:#b8860b;font-weight:700">34 requests</span></div>
+        <div class="metric-row"><span>❌ Rejected by AI</span><span style="color:#e9340a;font-weight:700">19 requests</span></div>
+        <div class="metric-row"><span>⏱ Avg Processing Time</span><span style="color:#0a6ed1;font-weight:700">4.2 mins</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURCHASE REQUESTS -->
+  <div id="tab-requests" class="tab-content">
+    <div class="card" style="max-width:620px;margin-bottom:20px">
+      <div class="card-title">➕ Submit Purchase Request</div>
+      <div class="grid2">
+        <div class="form-row"><label>Item Name</label><input id="itemName" placeholder="e.g. Laptops"/></div>
+        <div class="form-row"><label>Category</label>
+          <select id="itemCat"><option>IT Equipment</option><option>Office Furniture</option><option>Raw Materials</option><option>Maintenance</option></select>
+        </div>
+        <div class="form-row"><label>Quantity</label><input id="itemQty" type="number" placeholder="e.g. 10"/></div>
+        <div class="form-row"><label>Estimated Cost (₹)</label><input id="itemCost" type="number" placeholder="e.g. 900000"/></div>
+      </div>
+      <div class="form-row"><label>Justification</label><textarea id="itemJust" placeholder="Why is this purchase needed?"></textarea></div>
+      <button class="btn btn-primary" onclick="submitPR()">🤖 Submit for AI Classification</button>
+      <div class="ai-box" id="prResult" style="display:none"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Recent Purchase Requests</div>
+      <table>
+        <thead><tr><th>PR ID</th><th>Item</th><th>Category</th><th>Amount</th><th>AI Status</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>#PR-441</td><td>Laptops (10)</td><td>IT Equipment</td><td>₹9,00,000</td><td><span class="badge badge-green">✅ Auto-Approved</span></td><td><button class="btn btn-sm btn-primary" onclick="toast('PO Created for #PR-441')">Create PO</button></td></tr>
+          <tr><td>#PR-440</td><td>Office Chairs (20)</td><td>Office Furniture</td><td>₹80,000</td><td><span class="badge badge-green">✅ Auto-Approved</span></td><td><button class="btn btn-sm btn-primary" onclick="toast('PO Created for #PR-440')">Create PO</button></td></tr>
+          <tr><td>#PR-439</td><td>Server Rack</td><td>IT Equipment</td><td>₹4,50,000</td><td><span class="badge badge-yellow">⏳ Pending Review</span></td><td><button class="btn btn-sm" style="background:#f5a623;color:white" onclick="toast('Sent for manager approval')">Approve</button></td></tr>
+          <tr><td>#PR-438</td><td>Luxury Sofa</td><td>Office Furniture</td><td>₹2,20,000</td><td><span class="badge badge-red">❌ Rejected</span></td><td><span style="font-size:12px;color:#6a6d70">Exceeds budget</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VENDORS -->
+  <div id="tab-vendors" class="tab-content">
+    <div class="card">
+      <div class="card-title">⭐ AI Vendor Scoring — Powered by LangChain</div>
+      <table>
+        <thead><tr><th>Vendor</th><th>Category</th><th>On-Time %</th><th>Quality</th><th>Price</th><th>AI Score</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>TechParts India</td><td>IT Equipment</td><td>98%</td><td><span class="star">★★★★★</span></td><td>Competitive</td><td><strong style="color:#0ead69">9.4/10</strong></td><td><span class="badge badge-green">Preferred</span></td></tr>
+          <tr><td>OfficeWorld</td><td>Furniture</td><td>92%</td><td><span class="star">★★★★</span>☆</td><td>Average</td><td><strong style="color:#0a6ed1">7.8/10</strong></td><td><span class="badge badge-blue">Approved</span></td></tr>
+          <tr><td>RawMat Suppliers</td><td>Raw Materials</td><td>85%</td><td><span class="star">★★★</span>☆☆</td><td>Low</td><td><strong style="color:#b8860b">6.2/10</strong></td><td><span class="badge badge-yellow">Review</span></td></tr>
+          <tr><td>QuickLogix</td><td>Logistics</td><td>72%</td><td><span class="star">★★</span>☆☆☆</td><td>Expensive</td><td><strong style="color:#e9340a">4.1/10</strong></td><td><span class="badge badge-red">Blacklisted</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONTRACTS -->
+  <div id="tab-contracts" class="tab-content">
+    <div class="card">
+      <div class="card-title">📄 Contract Risk Analysis</div>
+      <table>
+        <thead><tr><th>Contract</th><th>Vendor</th><th>Value</th><th>Expiry</th><th>Risk</th><th>AI Flag</th></tr></thead>
+        <tbody>
+          <tr><td>#CT-101</td><td>TechParts India</td><td>₹50L</td><td>Dec 2026</td><td><span class="badge badge-green">Low</span></td><td>✅ No issues</td></tr>
+          <tr><td>#CT-099</td><td>OfficeWorld</td><td>₹18L</td><td>Jun 2026</td><td><span class="badge badge-yellow">Medium</span></td><td>⚠ Penalty clause missing</td></tr>
+          <tr><td>#CT-098</td><td>RawMat Suppliers</td><td>₹32L</td><td>May 2026</td><td><span class="badge badge-red">High</span></td><td>🚨 Price escalation clause — renegotiate</td></tr>
+          <tr><td>#CT-097</td><td>QuickLogix</td><td>₹8L</td><td>Apr 2026</td><td><span class="badge badge-red">High</span></td><td>🚨 SLA breach — legal review needed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AI ANALYSIS -->
+  <div id="tab-ai" class="tab-content">
+    <div class="card">
+      <div class="card-title">🤖 LangChain AI Procurement Intelligence</div>
+      <div class="ai-box" style="font-size:14px;line-height:2">
+        <div class="ai-label">💡 AI Recommendations — April 2026</div>
+        <div>📉 <strong>Savings Opportunity:</strong> Switch Logistics vendor from QuickLogix to SpeedFreight India → Save ₹3.2L/year</div>
+        <div>📈 <strong>Demand Prediction:</strong> IT Equipment orders expected to rise 28% in Q2 — pre-negotiate bulk discount with TechParts India</div>
+        <div>⚠️ <strong>Contract Alert:</strong> 3 contracts expiring in 60 days — renewal workflow triggered</div>
+        <div>✅ <strong>Compliance:</strong> All approved vendors are GST-compliant and ISO-certified</div>
+        <div>🚨 <strong>Risk Alert:</strong> RawMat Suppliers price escalation clause could cost ₹12L extra — immediate renegotiation recommended</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+function switchTab(tab,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  el.classList.add('active');
+}
+function toast(msg){
+  const t=document.getElementById('toastEl');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+function submitPR(){
+  const item=document.getElementById('itemName').value.trim();
+  const cat=document.getElementById('itemCat').value;
+  const cost=document.getElementById('itemCost').value;
+  if(!item){toast('⚠️ Please fill item name');return;}
+  const approved=parseInt(cost)<500000;
+  const res=document.getElementById('prResult');
+  res.style.display='block';
+  res.innerHTML=`<div class="ai-label">🤖 AI Classification Result</div>
+    <div><strong>Item:</strong> ${item} | <strong>Category:</strong> ${cat}</div>
+    <div style="margin-top:6px"><strong>Decision:</strong> <span style="color:${approved?'#0ead69':'#b8860b'};font-weight:700">${approved?'✅ Auto-Approved':'⏳ Requires Manager Approval'}</span></div>
+    <div style="margin-top:4px"><strong>Reason:</strong> ${approved?'Within auto-approval budget limit (₹5L)':'Amount exceeds auto-approval threshold — escalated to manager'}</div>`;
+}
+</script>
+</body>
+</html>

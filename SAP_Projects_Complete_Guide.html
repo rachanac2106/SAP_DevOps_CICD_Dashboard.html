@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My SAP Projects — Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --sap-blue: #0a6ed1;
+    --sap-dark: #0854a0;
+    --green: #0ead69;
+    --red: #e9340a;
+    --yellow: #f5a623;
+    --purple: #7c3aed;
+    --bg: #f0f4fa;
+    --card: #ffffff;
+    --text: #1a1f36;
+    --muted: #6b7280;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0a6ed1 0%, #0854a0 50%, #062f6e 100%);
+    color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,.08) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,.05) 0%, transparent 50%);
+  }
+  .hero .tag { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); padding: 4px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 12px; }
+  .hero p { font-size: 16px; opacity: .85; max-width: 600px; margin: 0 auto 30px; }
+  .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 10px; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-size: 32px; font-weight: 800; }
+  .hero-stat .label { font-size: 12px; opacity: .75; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* NAV */
+  .sticky-nav {
+    position: sticky; top: 0; z-index: 100; background: white; border-bottom: 2px solid var(--border);
+    padding: 0 32px; display: flex; gap: 4px; overflow-x: auto;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .sticky-nav a {
+    text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 600;
+    padding: 14px 16px; border-bottom: 3px solid transparent; white-space: nowrap;
+    transition: color .2s, border-color .2s;
+  }
+  .sticky-nav a:hover { color: var(--sap-blue); border-bottom-color: var(--sap-blue); }
+
+  /* MAIN */
+  .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* SECTION */
+  .section { margin-bottom: 64px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .section-num { width: 40px; height: 40px; background: var(--sap-blue); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+  .section-title { font-size: 22px; font-weight: 800; }
+  .section-subtitle { font-size: 13px; color: var(--muted); font-weight: 400; }
+
+  /* PROJECT CARD */
+  .project-card {
+    background: white; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,.07); margin-bottom: 28px;
+    border: 1px solid var(--border);
+  }
+  .project-header {
+    padding: 22px 28px; color: white; display: flex; align-items: center; gap: 16px;
+  }
+  .project-icon { font-size: 32px; }
+  .project-header-text h2 { font-size: 19px; font-weight: 800; }
+  .project-header-text p { font-size: 13px; opacity: .85; margin-top: 2px; }
+  .project-body { padding: 28px; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tag-chip {
+    padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+    letter-spacing: .3px; text-transform: uppercase;
+  }
+  .tag-tech { background: #dbeafe; color: #1d4ed8; }
+  .tag-ai { background: #fce7f3; color: #9d174d; }
+  .tag-sap { background: #d1fae5; color: #065f46; }
+
+  /* INFO GRID */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 26px; } }
+  .info-box { background: var(--bg); border-radius: 10px; padding: 16px 18px; }
+  .info-box h4 { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+  .info-box ul { list-style: none; }
+  .info-box ul li { font-size: 13px; padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .info-box ul li::before { content: '→'; color: var(--sap-blue); font-weight: 700; flex-shrink: 0; }
+
+  /* EXPLAIN BOX */
+  .explain-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+  .explain-box h4 { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 10px; }
+  .explain-box p { font-size: 13px; color: #78350f; line-height: 1.7; }
+
+  /* HR SCRIPT */
+  .hr-script { background: linear-gradient(135deg, #f0f7ff, #e8f4fd); border: 1px solid #bfdbfe; border-radius: 10px; padding: 20px; }
+  .hr-script h4 { font-size: 13px; font-weight: 700; color: var(--sap-blue); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .hr-script .speech { font-size: 14px; color: #1e3a5f; line-height: 1.8; font-style: italic; border-left: 3px solid var(--sap-blue); padding-left: 14px; }
+
+  /* SECTION OVERVIEW */
+  .overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  @media (max-width: 700px) { .overview-grid { grid-template-columns: 1fr 1fr; } }
+  .overview-card {
+    background: white; border-radius: 12px; padding: 20px 16px; text-align: center;
+    border: 1px solid var(--border); box-shadow: 0 1px 6px rgba(0,0,0,.05);
+  }
+  .overview-card .oc-icon { font-size: 28px; margin-bottom: 8px; }
+  .overview-card .oc-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .overview-card .oc-type { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* TECH EXPLAINED */
+  .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .tech-box { background: white; border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+  .tech-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .tech-box p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* Q&A */
+  .qa-list { display: flex; flex-direction: column; gap: 14px; }
+  .qa-item { background: white; border-radius: 12px; padding: 18px 20px; border: 1px solid var(--border); }
+  .qa-item .q { font-size: 14px; font-weight: 700; color: var(--sap-blue); margin-bottom: 8px; }
+  .qa-item .a { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* COLORS per project */
+  .c1 { background: linear-gradient(135deg, #0a6ed1, #0854a0); }
+  .c2 { background: linear-gradient(135deg, #059669, #047857); }
+  .c3 { background: linear-gradient(135deg, #d97706, #b45309); }
+  .c4 { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+  .c5 { background: linear-gradient(135deg, #0891b2, #0e7490); }
+  .c6 { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; }
+
+  .divider { border: none; border-top: 2px solid var(--border); margin: 48px 0; }
+
+  .tip-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 16px 18px; margin-top: 16px; }
+  .tip-box h4 { font-size: 12px; font-weight: 700; color: #166534; text-transform: uppercase; margin-bottom: 8px; }
+  .tip-box p { font-size: 13px; color: #14532d; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tag">🎓 Complete Learning Guide</div>
+  <h1>Your 6 SAP Projects — Explained</h1>
+  <p>Everything you need to understand what you built, how it works, and how to confidently explain it to anyone — including your HR.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">6</div><div class="label">Projects Built</div></div>
+    <div class="hero-stat"><div class="num">4+</div><div class="label">AI Technologies</div></div>
+    <div class="hero-stat"><div class="num">SAP</div><div class="label">Enterprise Grade</div></div>
+    <div class="hero-stat"><div class="num">100%</div><div class="label">Yours to Explain</div></div>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="sticky-nav">
+  <a href="#overview">Overview</a>
+  <a href="#p1">FinSight</a>
+  <a href="#p2">ProcureAI</a>
+  <a href="#p3">OrderFlow</a>
+  <a href="#p4">TalentBridge</a>
+  <a href="#p5">DevOps</a>
+  <a href="#p6">Blockchain</a>
+  <a href="#tech">Tech Guide</a>
+  <a href="#hr">HR Q&amp;A</a>
+</div>
+
+<div class="container">
+
+  <!-- OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="section-header">
+      <div class="section-num">★</div>
+      <div>
+        <div class="section-title">Your 6 Projects at a Glance</div>
+        <div class="section-subtitle">What you built and which domain it belongs to</div>
+      </div>
+    </div>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="oc-icon">💰</div>
+        <div class="oc-name">SAP-FinSight</div>
+        <div class="oc-type">Finance &amp; Accounting</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon">🛒</div>
+        <div class="oc-name">SAP-ProcureAI</div>
+        <div class="oc-type">Procurement / Supply Chain</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon">📦</div>
+        <div class="oc-name">SAP-OrderFlow AI</div>
+        <div class="oc-type">Order Management</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon">👥</div>
+        <div class="oc-name">SAP-TalentBridge</div>
+        <div class="oc-type">HR &amp; Talent Management</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon">🚀</div>
+        <div class="oc-name">SAP DevOps CI/CD</div>
+        <div class="oc-type">Software Deployment</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon">🗳️</div>
+        <div class="oc-name">SAP Blockchain Voting</div>
+        <div class="oc-type">Blockchain / Governance</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <h4>💡 The Big Picture — What connects all 6 projects?</h4>
+      <p>All 6 are <strong>SAP-style enterprise dashboards</strong> — the kind of software used by large companies like Infosys, TCS, Wipro. You simulated real business modules (Finance, HR, Orders, etc.) and added <strong>AI features</strong> on top of them. This shows you understand both enterprise software and modern AI/ML integration. That's a very valuable combination in today's job market.</p>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- PROJECT 1: FINSIGHT -->
+  <div class="section" id="p1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">SAP-FinSight — Financial Analytics Dashboard</div>
+        <div class="section-subtitle">Finance Module with AI Anomaly Detection</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header c1">
+        <div class="project-icon">💰</div>
+        <div class="project-header-text">
+          <h2>SAP-FinSight</h2>
+          <p>Monitor company finances, detect fraud, and generate reports — all in one place</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="tags">
+          <span class="tag-chip tag-sap">SAP Finance</span>
+          <span class="tag-chip tag-ai">AI Anomaly Detection</span>
+          <span class="tag-chip tag-tech">P&amp;L Reports</span>
+          <span class="tag-chip tag-tech">Budget Tracking</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h4>🖥️ What the screens show</h4>
+            <ul>
+              <li>Dashboard — Revenue, Profit, Expenses overview</li>
+              <li>P&amp;L Report — Jan/Feb/Mar income statement</li>
+              <li>Budget Variance — Planned vs Actual spend per department</li>
+              <li>AI Anomaly Tab — Suspicious transactions auto-detected</li>
+              <li>Reports Tab — Export buttons for Finance team</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h4>🤖 Where AI is used</h4>
+            <ul>
+              <li>Detects TXN-8821: Marketing spent 300% above average</li>
+              <li>Flags TXN-8814: Duplicate payment in HR (₹3.2L paid twice)</li>
+              <li>Spots TXN-8801: No Purchase Order linked</li>
+              <li>98.4% of transactions are auto-verified as clean</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <h4>🧠 Understand it simply — Real world analogy</h4>
+          <p>Think of FinSight like a <strong>smart bank statement app</strong> for a company. Just like your bank app alerts you when your spending is unusual, FinSight alerts the finance team when company transactions look suspicious. The P&amp;L report is like a company's report card — Revenue earned, costs paid, profit left over. Budget Variance is like checking if you stayed within your monthly budget or overspent.</p>
+        </div>
+
+        <div class="hr-script">
+          <h4>🎤 What to say when HR asks about this project</h4>
+          <div class="speech">"FinSight is a Financial Analytics Dashboard built on SAP's design principles. It has five modules — a real-time dashboard, a Profit &amp; Loss report for Q1 2026, a Budget vs Actual tracker per department, an AI-powered anomaly detection system, and a report export module. The most interesting part is the AI anomaly engine, which automatically scans all transactions and flags three types of issues: unusual spikes in spending, duplicate payments, and expenses without a Purchase Order. This is similar to how banks use machine learning for fraud detection, but applied to corporate finance."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2: PROCURE AI -->
+  <div class="section" id="p2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">SAP-ProcureAI — Intelligent Procurement System</div>
+        <div class="section-subtitle">AI-driven purchasing, vendor management, and contract risk</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header c2">
+        <div class="project-icon">🛒</div>
+        <div class="project-header-text">
+          <h2>SAP-ProcureAI</h2>
+          <p>Automate buying processes, score vendors, and analyse contract risks using AI</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="tags">
+          <span class="tag-chip tag-sap">SAP MM Module</span>
+          <span class="tag-chip tag-ai">LangChain AI</span>
+          <span class="tag-chip tag-tech">Vendor Scoring</span>
+          <span class="tag-chip tag-tech">Contract Risk</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h4>🖥️ What the screens show</h4>
+            <ul>
+              <li>Dashboard — 142 open purchase requests, ₹2.4Cr spend</li>
+              <li>Purchase Requests — Submit a request, AI auto-approves if under ₹5L</li>
+              <li>Vendor Scoring — AI rates each vendor out of 10</li>
+              <li>Contracts — Flags risky contract clauses automatically</li>
+              <li>AI Analysis — Savings recommendations and demand predictions</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h4>🤖 Where AI is used</h4>
+            <ul>
+              <li>Auto-approves 89 requests, routes 34 for review, rejects 19</li>
+              <li>Scores vendors: TechParts India 9.4/10 (Preferred)</li>
+              <li>Flags QuickLogix: 4.1/10, SLA breach — Blacklisted</li>
+              <li>Saves 60% processing time via auto-classification</li>
+              <li>Recommends switching vendor to save ₹3.2L/year</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <h4>🧠 Understand it simply — Real world analogy</h4>
+          <p>Procurement means <strong>"buying things the company needs"</strong> — laptops, furniture, raw materials. Normally this takes days of paperwork and approvals. ProcureAI is like having a smart assistant that automatically approves small purchases, scores suppliers (like Swiggy ratings for vendors), and warns you if a contract has dangerous terms. It's the difference between a manual office process and an automated, AI-powered purchasing system.</p>
+        </div>
+
+        <div class="hr-script">
+          <h4>🎤 What to say when HR asks about this project</h4>
+          <div class="speech">"ProcureAI is an Intelligent Procurement System that automates the entire purchase-to-pay cycle. It has five modules: a spend analytics dashboard, a purchase request form with AI auto-classification, a vendor scoring engine built using LangChain, a contract risk analysis module, and an AI recommendations panel. The key feature is the auto-classification — when a purchase request comes in, the AI decides instantly whether to approve it, send it for manager review, or reject it, based on category, amount, and business rules. This reduced processing time by 60% in the simulation."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3: ORDERFLOW -->
+  <div class="section" id="p3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">SAP-OrderFlow AI — Order Management System</div>
+        <div class="section-subtitle">Track orders, detect anomalies, forecast demand</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header c3">
+        <div class="project-icon">📦</div>
+        <div class="project-header-text">
+          <h2>SAP-OrderFlow AI</h2>
+          <p>Manage 1,284 daily orders, catch duplicates, and predict stock shortages before they happen</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="tags">
+          <span class="tag-chip tag-sap">SAP SD Module</span>
+          <span class="tag-chip tag-ai">OpenAI GPT</span>
+          <span class="tag-chip tag-tech">Demand Forecasting</span>
+          <span class="tag-chip tag-tech">Inventory Management</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h4>🖥️ What the screens show</h4>
+            <ul>
+              <li>Dashboard — 1,284 orders today, ₹48.2L revenue</li>
+              <li>Orders Tab — Full order list with status updates</li>
+              <li>New Order — Form to create an order with one click</li>
+              <li>AI Forecast — 7-day demand prediction by category</li>
+              <li>Inventory — Live stock levels with reorder alerts</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h4>🤖 Where AI is used</h4>
+            <ul>
+              <li>Predicts +23% Electronics demand surge in 7 days</li>
+              <li>Alerts: SKU-4821 (Laptop Stand) will run out in 3 days</li>
+              <li>Flags #ORD-9847: Duplicate order from Accenture</li>
+              <li>#ORD-9831: Price 3x above average — manager approval needed</li>
+              <li>94.3% on-time delivery rate tracked automatically</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <h4>🧠 Understand it simply — Real world analogy</h4>
+          <p>Think of this like <strong>Amazon's order management system, but for B2B companies</strong>. When TCS orders 20 laptops, that order flows through: New → Processing → Shipped → Delivered. The AI part is like a smart CCTV — it watches all orders and immediately flags anything suspicious (duplicate orders, unusual prices, strange delivery locations). The demand forecast is like a weather forecast, but for product demand instead of rain.</p>
+        </div>
+
+        <div class="hr-script">
+          <h4>🎤 What to say when HR asks about this project</h4>
+          <div class="speech">"OrderFlow AI is an end-to-end Order Management System built on SAP's Sales &amp; Distribution principles. It handles the complete order lifecycle from creation to delivery. The standout feature is the AI layer powered by OpenAI GPT, which does two things: anomaly detection — it catches duplicate orders and pricing irregularities in real time — and demand forecasting — it predicts which products will spike in demand over the next 7 days, so the warehouse can restock proactively. This prevents the classic problem of stock-outs during high-demand periods."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 4: TALENTBRIDGE -->
+  <div class="section" id="p4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">SAP-TalentBridge — HR &amp; Talent Management System</div>
+        <div class="section-subtitle">Recruit, onboard, and manage employees with AI</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header c4">
+        <div class="project-icon">👥</div>
+        <div class="project-header-text">
+          <h2>SAP-TalentBridge</h2>
+          <p>AI resume screening, automated onboarding, HR chatbot — 40% HR workload reduced</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="tags">
+          <span class="tag-chip tag-sap">SAP HCM Module</span>
+          <span class="tag-chip tag-ai">LangChain Chatbot</span>
+          <span class="tag-chip tag-tech">Resume Screening</span>
+          <span class="tag-chip tag-tech">Onboarding Workflow</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h4>🖥️ What the screens show</h4>
+            <ul>
+              <li>Dashboard — 248 employees, 14 open positions, 87 applicants</li>
+              <li>Recruitment — Post jobs, AI scores each resume (% match)</li>
+              <li>Employees — Full employee directory and profiles</li>
+              <li>Onboarding — Automated task checklist for new joiners</li>
+              <li>HR Chatbot — Employees can ask HR questions anytime</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h4>🤖 Where AI is used</h4>
+            <ul>
+              <li>Screens resumes instantly — shows match % per candidate</li>
+              <li>Auto-generates onboarding checklist for each new hire</li>
+              <li>HR Chatbot answers leave queries, policies, payroll FAQs</li>
+              <li>Saves 40% of HR team's daily workload</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <h4>🧠 Understand it simply — Real world analogy</h4>
+          <p>Imagine HR getting 87 job applications in a week. Normally an HR person reads each one manually — that takes days. TalentBridge is like having an <strong>AI assistant that reads all 87 resumes in seconds</strong> and gives each one a score (like 92% match, 43% match). The HR chatbot is like having WhatsApp for employees where they can ask "How many leaves do I have?" and get an instant answer — no need to email HR and wait.</p>
+        </div>
+
+        <div class="hr-script">
+          <h4>🎤 What to say when HR asks about this project</h4>
+          <div class="speech">"TalentBridge is an AI-powered HR &amp; Talent Management System that covers the full employee lifecycle. The recruitment module uses AI to screen resumes and assign a match percentage to each candidate, so HR focuses only on the top profiles. The onboarding module auto-generates a personalised checklist for each new employee. And the HR chatbot, built on LangChain, handles routine queries — leave balance, payslips, policies — so the HR team can focus on strategic work. Overall, it reduces HR's operational workload by 40%."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 5: DEVOPS -->
+  <div class="section" id="p5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">SAP DevOps CI/CD Dashboard</div>
+        <div class="section-subtitle">Monitor software builds, deployments, and system health</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header c5">
+        <div class="project-icon">🚀</div>
+        <div class="project-header-text">
+          <h2>SAP DevOps CI/CD Pipeline</h2>
+          <p>47 builds today, 94% success rate, real-time deployment monitoring for SAP S/4HANA</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="tags">
+          <span class="tag-chip tag-sap">SAP S/4HANA</span>
+          <span class="tag-chip tag-tech">CI/CD Pipeline</span>
+          <span class="tag-chip tag-tech">Jenkins / GitHub Actions</span>
+          <span class="tag-chip tag-tech">System Monitoring</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h4>🖥️ What the screens show</h4>
+            <ul>
+              <li>Pipeline view — Live stages: Build → Test → Deploy</li>
+              <li>Build logs — Real-time log output as code deploys</li>
+              <li>Test coverage — Unit, Integration, E2E test results</li>
+              <li>All Pipelines — Different SAP modules being deployed</li>
+              <li>System Health — Uptime 99.8%, CPU, response time</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h4>🛠️ What CI/CD actually means</h4>
+            <ul>
+              <li>CI = Continuous Integration: code changes auto-tested</li>
+              <li>CD = Continuous Delivery: tested code auto-deployed</li>
+              <li>3.2 min average build time monitored live</li>
+              <li>Deployment history tracked across environments</li>
+              <li>Alerts raised if build fails or system degrades</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <h4>🧠 Understand it simply — Real world analogy</h4>
+          <p>When developers write new code, it needs to be tested and deployed to production safely. Without CI/CD, this was done manually — risky and slow. Think of CI/CD like an <strong>airport security check for software</strong>. Every code change goes through: baggage check (build) → security scan (tests) → boarding (deploy to production). This dashboard is the <strong>airport control tower</strong> — you can see every flight (build), know which ones are delayed (failed), and monitor runway capacity (server health) in real time.</p>
+        </div>
+
+        <div class="hr-script">
+          <h4>🎤 What to say when HR asks about this project</h4>
+          <div class="speech">"The DevOps CI/CD Dashboard is a monitoring and control system for SAP S/4HANA software deployments. CI/CD stands for Continuous Integration and Continuous Delivery — it's the industry standard for deploying software safely and quickly. This dashboard shows the entire pipeline in real time: from code commit, through automated testing, to production deployment. It also monitors system health — uptime, CPU usage, response times, and alerts. I built this to show understanding of modern DevOps practices, which are a mandatory part of any enterprise SAP implementation today."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 6: BLOCKCHAIN -->
+  <div class="section" id="p6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">SAP Blockchain Voting System</div>
+        <div class="section-subtitle">Tamper-proof elections on an immutable blockchain ledger</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header c6">
+        <div class="project-icon">🗳️</div>
+        <div class="project-header-text">
+          <h2>SAP Blockchain Voting System</h2>
+          <p>1,248 votes cast, 99.9% integrity — every vote permanently recorded on blockchain</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="tags">
+          <span class="tag-chip tag-sap">SAP BTP</span>
+          <span class="tag-chip tag-tech">Blockchain</span>
+          <span class="tag-chip tag-tech">Immutable Ledger</span>
+          <span class="tag-chip tag-tech">Cryptographic Hashing</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h4>🖥️ What the screens show</h4>
+            <ul>
+              <li>Dashboard — 3 active elections, 1,248 total votes cast</li>
+              <li>Create Election — Admin creates new election with candidates</li>
+              <li>Vote — Employees cast votes for board members</li>
+              <li>Results — Live charts showing vote distribution</li>
+              <li>Blockchain Ledger — Every vote stored as an immutable block</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h4>🔐 Why blockchain matters here</h4>
+            <ul>
+              <li>Once a vote is recorded, it cannot be changed or deleted</li>
+              <li>Every block has a unique hash (like a digital fingerprint)</li>
+              <li>99.9% system integrity — tamper-proof by design</li>
+              <li>Used for SAP Board Member elections and corporate governance</li>
+              <li>Transparent — anyone can verify results, no one can alter them</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <h4>🧠 Understand it simply — Real world analogy</h4>
+          <p>Normal voting systems have one problem: someone could change the database. Blockchain solves this by making a chain of locked boxes. Each vote goes into a box, the box is locked with a <strong>mathematical key (hash)</strong>, and that key is recorded in the next box. To change one vote, you'd have to break ALL the boxes in the chain simultaneously — which is practically impossible. It's like a <strong>Google Doc where nobody can delete history</strong> — every edit is permanently visible forever.</p>
+        </div>
+
+        <div class="hr-script">
+          <h4>🎤 What to say when HR asks about this project</h4>
+          <div class="speech">"The Blockchain Voting System is built on SAP BTP — Business Technology Platform — and demonstrates a real enterprise use case for blockchain: corporate governance and election integrity. The system allows companies to run board elections where every vote is stored as an immutable block on a ledger. Once recorded, votes cannot be altered or deleted. Each block contains a cryptographic hash of the previous block, creating a chain of trust. This is particularly valuable for companies that need to prove audit compliance — the voting trail is permanently verifiable. It's the same principle used by Ethereum, applied to enterprise elections."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- TECH GLOSSARY -->
+  <div class="section" id="tech">
+    <div class="section-header">
+      <div class="section-num">T</div>
+      <div>
+        <div class="section-title">Technology Terms — Explained Simply</div>
+        <div class="section-subtitle">So you can confidently talk about the tech you used</div>
+      </div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-box">
+        <h4>🤖 AI / Machine Learning</h4>
+        <p>You used AI to make your dashboards "smart" — detecting anomalies, scoring vendors, screening resumes. In simple terms: AI is a program that learns patterns from data and makes decisions based on those patterns, without being explicitly programmed for every case.</p>
+      </div>
+      <div class="tech-box">
+        <h4>🔗 LangChain</h4>
+        <p>A framework that connects AI language models (like GPT) to real data and tools. Used in ProcureAI and TalentBridge. Think of it as a "connector" that lets AI read your company's data and respond intelligently to queries — like a smart employee who has read all the manuals.</p>
+      </div>
+      <div class="tech-box">
+        <h4>⛓️ Blockchain</h4>
+        <p>A type of database where records are linked together in a chain. Once data is written, it cannot be changed without breaking the chain. Used in your Voting System. The "hash" is a unique fingerprint for each record — change even one character, and the fingerprint changes completely.</p>
+      </div>
+      <div class="tech-box">
+        <h4>🚀 CI/CD (DevOps)</h4>
+        <p>CI = Continuous Integration: every code change is automatically tested. CD = Continuous Delivery: tested code is automatically deployed to production. This is the standard way software teams ship updates safely and quickly — used by every major tech company.</p>
+      </div>
+      <div class="tech-box">
+        <h4>🏢 SAP (ERP System)</h4>
+        <p>SAP is the world's leading enterprise software company. Their ERP (Enterprise Resource Planning) system is used by 90% of Fortune 500 companies to manage Finance, HR, Supply Chain, and more. Your dashboards simulate SAP's modules: FI (Finance), MM (Materials), SD (Sales), HCM (HR).</p>
+      </div>
+      <div class="tech-box">
+        <h4>📊 Dashboard / UI</h4>
+        <p>You built all 6 projects as web-based dashboards using HTML, CSS, and JavaScript. These are frontend technologies. The UI (User Interface) is what users see and interact with. Your dashboards have tiles (summary cards), tables (data grids), tabs (navigation), and interactive buttons.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- HR Q&A -->
+  <div class="section" id="hr">
+    <div class="section-header">
+      <div class="section-num">?</div>
+      <div>
+        <div class="section-title">HR Interview Questions — Ready Answers</div>
+        <div class="section-subtitle">Memorise these and you'll be fully confident</div>
+      </div>
+    </div>
+
+    <div class="qa-list">
+
+      <div class="qa-item">
+        <div class="q">Q: "Tell me about your projects in one line each."</div>
+        <div class="a">
+          <strong>FinSight</strong> — AI-powered financial dashboard with anomaly detection for SAP Finance.<br/>
+          <strong>ProcureAI</strong> — Intelligent procurement system that auto-approves purchases and scores vendors.<br/>
+          <strong>OrderFlow AI</strong> — Order management system with demand forecasting and duplicate detection.<br/>
+          <strong>TalentBridge</strong> — HR platform with AI resume screening, onboarding automation, and HR chatbot.<br/>
+          <strong>DevOps CI/CD</strong> — Real-time pipeline monitoring dashboard for SAP software deployments.<br/>
+          <strong>Blockchain Voting</strong> — Tamper-proof corporate election system using blockchain ledger technology.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="q">Q: "What problem does each project solve?"</div>
+        <div class="a">
+          <strong>FinSight</strong> solves: Finance teams spending hours manually checking for fraudulent transactions.<br/>
+          <strong>ProcureAI</strong> solves: Procurement teams drowning in purchase approvals and vendor management.<br/>
+          <strong>OrderFlow</strong> solves: Companies losing money due to stock-outs and undetected fraudulent orders.<br/>
+          <strong>TalentBridge</strong> solves: HR teams spending days screening resumes and answering repetitive queries.<br/>
+          <strong>DevOps</strong> solves: Development teams lacking visibility into build failures and deployment health.<br/>
+          <strong>Blockchain Voting</strong> solves: Corporate elections that can be manipulated or lack auditability.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="q">Q: "What technologies did you use?"</div>
+        <div class="a">Frontend: HTML5, CSS3, JavaScript (for all 6 dashboards). AI Integration: OpenAI GPT API (OrderFlow, FinSight), LangChain (ProcureAI, TalentBridge). Enterprise Framework: SAP design system (Fiori-inspired UI patterns). Architecture concepts: Blockchain/distributed ledger (Voting System), CI/CD pipeline design (DevOps Dashboard). The projects demonstrate full-stack thinking — from UI design to AI integration to enterprise architecture.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="q">Q: "How is AI used in your projects?"</div>
+        <div class="a">I integrated AI in four specific ways across the projects: (1) <strong>Anomaly Detection</strong> — in FinSight and OrderFlow, AI monitors transactions and flags outliers automatically. (2) <strong>Auto-Classification</strong> — in ProcureAI, AI classifies purchase requests and makes approval decisions. (3) <strong>Resume Screening</strong> — in TalentBridge, AI reads resumes and scores them by match percentage. (4) <strong>Demand Forecasting</strong> — in OrderFlow, AI predicts which products will be in high demand in the next 7 days using historical patterns.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="q">Q: "What is the real-world application of these projects?"</div>
+        <div class="a">These are prototypes of the kind of software used in large Indian IT and manufacturing companies. FinSight mirrors SAP FICO (Finance Controlling). ProcureAI mirrors SAP MM (Materials Management). OrderFlow mirrors SAP SD (Sales &amp; Distribution). TalentBridge mirrors SAP HCM (Human Capital Management). Any company running SAP ERP would benefit from these AI add-ons, which is exactly the direction the industry is moving — SAP's own product called "SAP Business AI" does precisely this.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="q">Q: "What did you learn from building these?"</div>
+        <div class="a">I learned how different enterprise business functions connect — Finance, HR, Procurement, and Operations don't work in isolation. I also learned how AI can be layered onto existing enterprise workflows to automate repetitive decisions (like approvals and anomaly detection) without replacing the humans who make strategic calls. From a technical side, I deepened my understanding of frontend development, AI API integration, and blockchain fundamentals.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="q">Q: "Are these production-ready or just demos?"</div>
+        <div class="a">These are working frontend prototypes — fully interactive dashboards that demonstrate the complete user experience and feature set. To make them production-ready, you would connect them to a backend database (like SAP HANA or PostgreSQL), integrate real SAP APIs, add authentication and role-based access control, and deploy on a cloud platform like SAP BTP or AWS. The frontend architecture and AI logic I've implemented would remain the same — they'd just connect to live data instead of simulated data.</div>
+      </div>
+
+    </div>
+
+    <div class="tip-box" style="margin-top: 28px;">
+      <h4>🌟 Final Tip — Your Strongest Talking Points</h4>
+      <p>When talking to HR or interviewers, always emphasise these 3 things: <strong>(1) SAP domain knowledge</strong> — you understand how enterprise modules work (Finance, HR, Supply Chain). <strong>(2) AI integration</strong> — you didn't just build a basic dashboard, you added real intelligence. <strong>(3) Business impact</strong> — for each project, you can quote a specific business benefit (60% time saved, 40% workload reduced, ₹3.2L savings identified). Numbers make you memorable.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
